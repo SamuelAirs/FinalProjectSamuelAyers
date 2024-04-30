@@ -1,6 +1,7 @@
 {% extends "reminders/base.html" %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <article>
     <h1>{{ reminder.reminderDescription }}</h1>
     <p><strong>Details:</strong> {{ reminder.reminderDetails }}</p>
@@ -10,4 +11,9 @@
         <p><strong>End:</strong> {{ reminder.reminderDueDateEnd|date:"F d, Y H:i" }}</p>
     </section>
 </article>
+
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log in.</a>
+{% endif %}
 {% endblock %}
