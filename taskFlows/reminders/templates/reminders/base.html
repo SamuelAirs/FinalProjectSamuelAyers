@@ -5,15 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}TaskFlows{% endblock %}</title>
+    <title>TaskFlows</title>
     <link rel="stylesheet" href="{% static '/reminders/style.css' %}">
 </head>
 <body>
     <header>
-        <h1>TaskFlows - Reminders</h1>
+        <h1><a href="{% url 'reminders:index' %}">TaskFlows</a></h1>
         <nav>
             <ul>
                 <li><a href="{% url 'reminders:index' %}">Home</a></li>
+                <li><a href="{% url 'reminders:index' %}">New Reminder</a></li>
+                <li><a href="{% url 'reminders:index' %}">Calendar</a></li>
                 <!-- Add other navigation links here -->
             </ul>
         </nav>
