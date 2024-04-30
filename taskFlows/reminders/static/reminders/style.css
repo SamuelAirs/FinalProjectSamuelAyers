@@ -21,6 +21,18 @@ header {
 
 header h1 {
     margin: 0;
+    font-size: 4em;  /* Makes the title larger */
+}
+
+.brand-name {
+    font-weight: bold;
+    color: #ffffff;  /* Keep the white color */
+    text-decoration: none;  /* No underline */
+    transition: color 0.3s ease-in-out;  /* Smooth color transition for hover */
+}
+
+.brand-name:hover {
+    color: #f1bf7c;  /* Light grey for hover, easy on the eyes */
 }
 
 nav ul {
@@ -143,4 +155,14 @@ button {
 
 button:hover {
     opacity: 0.8;
+}
+
+header h1 a {
+    color: #fff;  /* White text color to match the header */
+    text-decoration: none;  /* Removes underline */
+    transition: color 0.3s;  /* Smooth transition for color change */
+}
+
+header h1 a:hover {
+    color: #cccccc;  /* Lighter shade on hover */
 }
