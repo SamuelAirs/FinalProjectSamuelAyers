@@ -1,7 +1,6 @@
-{% load static %}
+{% extends "reminders/base.html" %}
 
-<link rel="stylesheet" href="{% static 'reminders/style.css' %}">
-
+{% block content %}
 {% if latestReminderList %}
     <ul>
     {% for reminder in latestReminderList %}
@@ -11,3 +10,4 @@
 {% else %}
     <p>No reminders are available.</p>
 {% endif %}
+{% endblock %}

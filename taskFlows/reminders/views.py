@@ -17,10 +17,6 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return reminderBase.objects.order_by("reminderCreationTime")[:]
 
-class DetailView(generic.DetailView):
-    model = reminderBase
-    template_name = "reminders/detail.html"
-
 
 def index(request):
     latestReminderList = reminderBase.objects.order_by("reminderCreationTime")[:5]
