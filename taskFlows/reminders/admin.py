@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import reminderBase, reminderDetails
+from .models import reminderBase
 
 admin.site.register(reminderBase)
-admin.site.register(reminderDetails)
+
