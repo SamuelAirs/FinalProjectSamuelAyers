@@ -1,7 +1,11 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'reminders/style.css' %}">
+
 {% if latestReminderList %}
     <ul>
     {% for reminder in latestReminderList %}
-        <li><a href="{% url 'polls:detail' reminder.id %}">{{ reminder.reminderDescription }}</a></li>
+        <li><a href="{% url 'reminders:detail' reminder.id %}">{{ reminder.reminderDescription }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
