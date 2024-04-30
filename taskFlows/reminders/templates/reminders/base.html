@@ -31,14 +31,7 @@
 <body>
     <header>
     <h1><a href="{% url 'reminders:index' %}"><span class="brand-name">TaskFlows</span></a></h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'reminders:index' %}">Home</a></li>
-            <li><a href="{% url 'reminders:index' %}">New Reminder</a></li>
-            <li><a href="{% url 'reminders:index' %}">Calendar</a></li>
-            <!-- Add other navigation links here -->
-        </ul>
-    </nav>
+
     </header>
 {% endif %}
     {% block content %}{% endblock %}
