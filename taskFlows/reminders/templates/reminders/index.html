@@ -1,0 +1,9 @@
+{% if latestReminderList %}
+    <ul>
+    {% for reminder in latestReminderList %}
+        <li><a href="{% url 'polls:detail' reminder.id %}">{{ reminder.reminderDescription }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No reminders are available.</p>
+{% endif %}
