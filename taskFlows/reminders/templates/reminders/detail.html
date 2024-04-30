@@ -1,9 +1,13 @@
 {% extends "reminders/base.html" %}
 
 {% block content %}
-<h1>{{ reminder.reminderDescription }}</h1>
-<h2>{{ reminder.reminderDetails }}</h2>
-<h2>{{ reminder.reminderDueDateStart }}</h2>
-<h2>{{ reminder.reminderDueDateEnd }}</h2>
-
+<article>
+    <h1>{{ reminder.reminderDescription }}</h1>
+    <p><strong>Details:</strong> {{ reminder.reminderDetails }}</p>
+    <section>
+        <h2>Dates</h2>
+        <p><strong>Start:</strong> {{ reminder.reminderDueDateStart|date:"F d, Y H:i" }}</p>
+        <p><strong>End:</strong> {{ reminder.reminderDueDateEnd|date:"F d, Y H:i" }}</p>
+    </section>
+</article>
 {% endblock %}

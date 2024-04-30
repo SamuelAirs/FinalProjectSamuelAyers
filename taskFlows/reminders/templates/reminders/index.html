@@ -1,13 +1,19 @@
 {% extends "reminders/base.html" %}
 
 {% block content %}
-{% if latestReminderList %}
-    <ul>
-    {% for reminder in latestReminderList %}
-        <li><a href="{% url 'reminders:detail' reminder.id %}">{{ reminder.reminderDescription }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No reminders are available.</p>
-{% endif %}
+<div class="reminder-list">
+    {% if latestReminderList %}
+        <ul>
+        {% for reminder in latestReminderList %}
+            <li>
+                <a href="{% url 'reminders:detail' reminder.id %}">{{ reminder.reminderDescription }}</a>
+                <button class="edit-btn">Edit</button>
+                <button class="complete-btn">Mark as Complete</button>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reminders are available.</p>
+    {% endif %}
+</div>
 {% endblock %}
