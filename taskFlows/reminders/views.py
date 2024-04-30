@@ -4,9 +4,22 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render
+from django.urls import reverse
+from django.views import generic
 
 from .models import reminderBase
 from .models import reminderDetails
+
+class IndexView(generic.ListView):
+    template_name = 'reminders/index.html'
+    context_object_name = "latestReminderList"
+
+    def get_queryset(self):
+        return reminderBase.objects.order_by("reminderCreationTime")[:]
+
+class DetailView(generic.DetailView):
+    model = reminderBase
+    template_name = "reminders/detail.html"
 
 
 def index(request):
