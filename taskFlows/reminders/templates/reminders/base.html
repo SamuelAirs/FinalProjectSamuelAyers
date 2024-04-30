@@ -8,6 +8,26 @@
     <title>TaskFlows</title>
     <link rel="stylesheet" href="{% static '/reminders/style.css' %}">
 </head>
+
+{% if user.is_authenticated %}
+<body>
+    <header>
+        <h1><a href="{% url 'reminders:index' %}"><span class="brand-name">TaskFlows</span></a></h1>
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'reminders:index' %}">Home</a></li>
+                    <li><a href="{% url 'reminders:index' %}">New Reminder</a></li>
+                    <li><a href="{% url 'reminders:index' %}">Calendar</a></li>
+                </ul>
+            </nav>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+    </header>
+{% else %}
 <body>
     <header>
     <h1><a href="{% url 'reminders:index' %}"><span class="brand-name">TaskFlows</span></a></h1>
@@ -20,8 +40,7 @@
         </ul>
     </nav>
     </header>
-
-
+{% endif %}
     {% block content %}{% endblock %}
 
     <footer>
