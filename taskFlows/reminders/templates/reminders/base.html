@@ -17,8 +17,9 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'reminders:index' %}">Home</a></li>
-                    <li><a href="{% url 'reminders:index' %}">New Reminder</a></li>
-                    <li><a href="{% url 'reminders:index' %}">Calendar</a></li>
+                    <li><a href="{% url 'reminders:createReminder' %}">New Reminder</a></li>
+                    <li><a href="{% url 'reminders:' %}">Completed Reminders</a></li>
+                    <li><a href="{% url 'reminders:' %}">Calendar</a></li>
                 </ul>
             </nav>
             <form action="{% url 'logout' %}" method="post" class="logout-form">

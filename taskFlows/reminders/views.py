@@ -3,11 +3,11 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 
 from .models import reminderBase
-
+from .forms import reminderForm
 
 class IndexView(generic.ListView):
     template_name = 'reminders/index.html'
@@ -32,5 +32,13 @@ def detail(request, reminders_id):
         raise Http404("Question does not exist")
     return render(request, "reminders/detail.html", {"reminder": reminder})
 
-
+def createReminder(request):
+    if request.method == 'POST':
+        form = reminderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reminders:index')
+    else:
+        form = reminderForm()
+    return render(request, 'reminders/createReminder.html', {'form': form})
 
