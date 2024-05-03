@@ -9,8 +9,10 @@
             <li>
                 <a href="{% url 'reminders:detail' reminder.id %}">{{ reminder.reminderDescription }}</a>
                 <p>{{ reminder.reminderDueDateEnd }}</p>
-                <button class="edit-btn">Edit</button>
-                <button class="complete-btn">Mark as Complete</button>
+                <form action="{% url 'reminders:toggleCompletion' reminder.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="complete-btn">Mark as Complete</button>
+                </form>
             </li>
         {% endfor %}
         </ul>

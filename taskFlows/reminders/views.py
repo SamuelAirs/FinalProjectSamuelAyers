@@ -1,27 +1,25 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
+from django.urls import reverse
+
 
 from .models import reminderBase
 from .forms import reminderForm
 
-class IndexView(generic.ListView):
+class index(generic.ListView):
     template_name = 'reminders/index.html'
     context_object_name = "latestReminderList"
 
     def get_queryset(self):
-        return reminderBase.objects.order_by("reminderCreationTime")[:]
+        # Filter to show only reminders that have not been marked as complete
+        return reminderBase.objects.filter(reminderCompletion=False).order_by("reminderCreationTime")
 
 
-def index(request):
-    latestReminderList = reminderBase.objects.order_by("reminderCreationTime")[:5]
-    template = loader.get_template("reminders/index.html")
-    context = {"latestReminderList": latestReminderList,}
-    return HttpResponse(template.render(context,request))
 
 def reminder(request, reminders_id):
     return HttpResponse("You're looking at reminder %s." % reminders_id)
@@ -42,3 +40,8 @@ def createReminder(request):
         form = reminderForm()
     return render(request, 'reminders/createReminder.html', {'form': form})
 
+def toggleCompletion(request, reminder_id):
+    reminder = get_object_or_404(reminderBase, pk=reminder_id)
+    reminder.reminderCompletion = True  # Set the reminder as completed
+    reminder.save()
+    return HttpResponseRedirect(reverse('reminders:index'))  # Redirect back to the index
