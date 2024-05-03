@@ -57,3 +57,16 @@ def toggleCompletion(request, reminder_id):
         reminder.reminderCompletion = True
         reminder.save()
         return HttpResponseRedirect(reverse('reminders:index'))  # Redirect back to the index
+
+def editReminder(request, reminder_id):
+    reminder = get_object_or_404(reminderBase, pk=reminder_id)
+    if request.method == 'POST':
+        form = reminderForm(request.POST, instance=reminder)
+        if form.is_valid():
+            editedReminder = form.save(commit=False)  # Save the form to the model but don't commit to the database yet
+            editedReminder.reminderCompletion = False  # Reset the completion status to False
+            editedReminder.save()
+            return redirect('reminders:index')  # Redirect to the index where only incomplete reminders are listed
+    else:
+        form = reminderForm(instance=reminder)
+    return render(request, 'reminders/editReminder.html', {'form': form})
