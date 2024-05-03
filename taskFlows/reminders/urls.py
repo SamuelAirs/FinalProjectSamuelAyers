@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:reminders_id>/", views.detail, name='detail'),
     path('new/', views.createReminder, name='createReminder'),
     path('toggle/<int:reminder_id>/', views.toggleCompletion, name='toggleCompletion'),
+    path('complete/', views.completedReminders.as_view(), name='completedReminders'),
 ]

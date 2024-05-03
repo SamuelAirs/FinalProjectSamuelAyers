@@ -19,6 +19,13 @@ class index(generic.ListView):
         # Filter to show only reminders that have not been marked as complete
         return reminderBase.objects.filter(reminderCompletion=False).order_by("reminderCreationTime")
 
+class completedReminders(generic.ListView):
+    template_name = 'reminders/index.html'
+    context_object_name = "latestReminderList"
+
+    def get_queryset(self):
+        # Filter to show only reminders that have not been marked as complete
+        return reminderBase.objects.filter(reminderCompletion=True).order_by("reminderCreationTime")
 
 
 def reminder(request, reminders_id):
@@ -42,6 +49,11 @@ def createReminder(request):
 
 def toggleCompletion(request, reminder_id):
     reminder = get_object_or_404(reminderBase, pk=reminder_id)
-    reminder.reminderCompletion = True  # Set the reminder as completed
-    reminder.save()
-    return HttpResponseRedirect(reverse('reminders:index'))  # Redirect back to the index
+    if reminder.reminderCompletion == True:
+        reminder.reminderCompletion = False
+        reminder.save()
+        return HttpResponseRedirect(reverse('reminders:completedReminders'))  # Redirect back to the index
+    else:
+        reminder.reminderCompletion = True
+        reminder.save()
+        return HttpResponseRedirect(reverse('reminders:index'))  # Redirect back to the index

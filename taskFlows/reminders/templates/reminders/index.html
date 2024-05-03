@@ -11,7 +11,7 @@
                 <p>{{ reminder.reminderDueDateEnd }}</p>
                 <form action="{% url 'reminders:toggleCompletion' reminder.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="complete-btn">Mark as Complete</button>
+                    <button type="submit" class="complete-btn">Toggle Completion</button>
                 </form>
             </li>
         {% endfor %}
