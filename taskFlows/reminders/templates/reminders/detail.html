@@ -4,12 +4,16 @@
 {% if user.is_authenticated %}
 <article>
     <h1>{{ reminder.reminderDescription }}</h1>
+    <p><strong>Created by:</strong> {{ reminder.user.username }}</p>
     <p><strong>Details:</strong> {{ reminder.reminderDetails }}</p>
     <section>
         <h2>Dates</h2>
+        <p><strong>Creation Time:</strong> {{ reminder.reminderCreationTime|date:"F d, Y H:i" }}</p>
         <p><strong>Start:</strong> {{ reminder.reminderDueDateStart|date:"F d, Y H:i" }}</p>
         <p><strong>End:</strong> {{ reminder.reminderDueDateEnd|date:"F d, Y H:i" }}</p>
     </section>
+    <p><strong>Importance:</strong> {{ reminder.get_reminderImportance_display }}</p>
+    <p><strong>Status:</strong> {{ reminder.reminderCompletion|yesno:"Completed,Not Completed" }}</p>
 </article>
 
 {% else %}
@@ -17,3 +21,4 @@
 <a href="{% url 'login' %}">Log in.</a>
 {% endif %}
 {% endblock %}
+

@@ -41,7 +41,9 @@ def createReminder(request):
     if request.method == 'POST':
         form = reminderForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_reminder = form.save(commit=False)
+            new_reminder.user = request.user  # Set the user to the current user
+            new_reminder.save()
             return redirect('reminders:index')
     else:
         form = reminderForm()

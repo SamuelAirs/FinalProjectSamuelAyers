@@ -7,13 +7,19 @@
         <ul>
         {% for reminder in latestReminderList %}
             <li>
-                <a href="{% url 'reminders:detail' reminder.id %}">{{ reminder.reminderDescription }}</a>
-                <p>{{ reminder.reminderDueDateEnd }}</p>
-                <a href="{% url 'reminders:editReminder' reminder.id %}">Edit</a>
-                <form action="{% url 'reminders:toggleCompletion' reminder.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="complete-btn">Toggle Completion</button>
-                </form>
+                <div class="reminder-info">
+                    <a href="{% url 'reminders:detail' reminder.id %}" class="reminder-title">{{ reminder.reminderDescription }}</a>
+                    <p class="reminder-date">{{ reminder.reminderDueDateEnd }}</p>
+                </div>
+                <div class="reminder-actions">
+                    <form action="{% url 'reminders:toggleCompletion' reminder.id %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="complete-btn">Toggle Completion</button>
+                    </form>
+                    <form action="{% url 'reminders:editReminder' reminder.id %}" method="get" class="form-inline">
+                        <button type="submit" class="edit-btn">Edit</button>
+                    </form>
+                </div>
             </li>
         {% endfor %}
         </ul>
