@@ -20,7 +20,6 @@
                 <div class="reminder-info">
                     <a href="{% url 'reminders:detail' reminder.id %}" class="reminder-title">{{ reminder.reminderDescription }}</a>
                     <p class="reminder-date">{{ reminder.reminderDueDateEnd }}</p>
-                    <!-- Displaying the importance with exclamation points -->
                     <p class="reminder-importance">Importance: {{ reminder.reminderImportance }}</p>
                 </div>
                 <div class="reminder-actions">
@@ -31,6 +30,12 @@
                     <form action="{% url 'reminders:editReminder' reminder.id %}" method="get" class="form-inline">
                         <button type="submit" class="edit-btn">Edit</button>
                     </form>
+                    {% if reminder.reminderCompletion %}
+                    <form action="{% url 'reminders:deleteReminder' reminder.id %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this reminder?');">Delete</button>
+                    </form>
+                    {% endif %}
                 </div>
             </li>
         {% endfor %}

@@ -83,3 +83,10 @@ def editReminder(request, reminder_id):
     else:
         form = reminderForm(instance=reminder)
     return render(request, 'reminders/editReminder.html', {'form': form})
+
+def deleteReminder(request, reminder_id):
+    reminder = get_object_or_404(reminderBase, pk=reminder_id)
+    if request.method == 'POST':
+        reminder.delete()
+        return HttpResponseRedirect(reverse('reminders:completedReminders'))
+    return HttpResponse("Method not allowed", status=405)
