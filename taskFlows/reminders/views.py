@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
@@ -17,7 +14,7 @@ class index(generic.ListView):
 
     def get_queryset(self):
         # Filter to show only reminders that have not been marked as complete
-        return reminderBase.objects.filter(reminderCompletion=False).order_by("reminderCreationTime")
+        return reminderBase.objects.filter(reminderCompletion=False).order_by("reminderDueDateEnd")
 
 class completedReminders(generic.ListView):
     template_name = 'reminders/index.html'
