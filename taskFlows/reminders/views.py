@@ -25,13 +25,18 @@ class index(LoginRequiredMixin, generic.ListView):
         ).order_by(sort_by)
 
 
-class completedReminders(generic.ListView):
+class completedReminders(LoginRequiredMixin, generic.ListView):
     template_name = 'reminders/index.html'
     context_object_name = "latestReminderList"
 
     def get_queryset(self):
-        # Filter to show only reminders that have not been marked as complete
-        return reminderBase.objects.filter(reminderCompletion=True).order_by("reminderCreationTime")
+        # Get sort parameter from the request, default is by 'reminderDueDateEnd'
+        sort_by = self.request.GET.get('sort', 'reminderDueDateEnd')
+        # Return reminders for the logged-in user sorted by the selected field
+        return reminderBase.objects.filter(
+            user=self.request.user,
+            reminderCompletion=True
+        ).order_by(sort_by)
 
 
 def reminder(request, reminders_id):
