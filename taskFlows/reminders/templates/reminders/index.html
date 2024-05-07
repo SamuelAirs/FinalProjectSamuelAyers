@@ -2,6 +2,16 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<div class="sort-form">
+    <form method="get" action="">
+        <label for="sort">Sort by:</label>
+        <select name="sort" onchange="this.form.submit()">
+            <option value="reminderDueDateEnd">Due Date</option>
+            <option value="reminderCreationTime">Creation Time</option>
+            <option value="reminderImportance">Importance</option>
+        </select>
+    </form>
+</div>
 <div class="reminder-list">
     {% if latestReminderList %}
         <ul>
@@ -10,6 +20,8 @@
                 <div class="reminder-info">
                     <a href="{% url 'reminders:detail' reminder.id %}" class="reminder-title">{{ reminder.reminderDescription }}</a>
                     <p class="reminder-date">{{ reminder.reminderDueDateEnd }}</p>
+                    <!-- Displaying the importance with exclamation points -->
+                    <p class="reminder-importance">Importance: {{ reminder.reminderImportance }}</p>
                 </div>
                 <div class="reminder-actions">
                     <form action="{% url 'reminders:toggleCompletion' reminder.id %}" method="post" class="form-inline">
@@ -27,10 +39,8 @@
         <p>No reminders are available.</p>
     {% endif %}
 </div>
-
 {% else %}
 <p>You are not logged in</p>
-<a href="{% url 'login' %}">Log in.</a>
+<a href="{% url 'login' %}">Log in</a>
 {% endif %}
-
 {% endblock %}

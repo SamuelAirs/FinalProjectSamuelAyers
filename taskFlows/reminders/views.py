@@ -3,18 +3,27 @@ from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from .models import reminderBase
 from .forms import reminderForm
 
-class index(generic.ListView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class index(LoginRequiredMixin, generic.ListView):
     template_name = 'reminders/index.html'
     context_object_name = "latestReminderList"
 
     def get_queryset(self):
-        # Filter to show only reminders that have not been marked as complete
-        return reminderBase.objects.filter(reminderCompletion=False).order_by("reminderDueDateEnd")
+        # Get sort parameter from the request, default is by 'reminderDueDateEnd'
+        sort_by = self.request.GET.get('sort', 'reminderDueDateEnd')
+        # Return reminders for the logged-in user sorted by the selected field
+        return reminderBase.objects.filter(
+            user=self.request.user,
+            reminderCompletion=False
+        ).order_by(sort_by)
+
 
 class completedReminders(generic.ListView):
     template_name = 'reminders/index.html'
