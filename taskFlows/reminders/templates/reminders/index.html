@@ -12,6 +12,7 @@
         </select>
     </form>
 </div>
+<div id="emailToast" class="toast">Email sent successfully!</div>
 <div class="reminder-list">
     {% if latestReminderList %}
         <ul>
@@ -53,4 +54,21 @@
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">Log in</a>
 {% endif %}
+<script>
+function showToast() {
+    var toast = document.getElementById("emailToast");
+    toast.classList.add("show");
+    setTimeout(function() {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+{% if 'email_sent' in request.GET %}
+window.onload = showToast;
+{% endif %}
+</script>
+
 {% endblock %}
+
+
+
