@@ -3,7 +3,10 @@ from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from .utils import send_email, create_message, SCOPES
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
 
 
 from .models import reminderBase
@@ -90,3 +93,23 @@ def deleteReminder(request, reminder_id):
         reminder.delete()
         return HttpResponseRedirect(reverse('reminders:completedReminders'))
     return HttpResponse("Method not allowed", status=405)
+
+
+@login_required
+def send_reminder_email(request):
+    user_email = request.user.email
+    if not user_email:
+        return HttpResponseRedirect('/update_email/')  # Handle the case where user email is not available
+
+    reminders = reminderBase.objects.filter(user=request.user, reminderCompletion=False)
+    email_body = "\n".join(
+        [f"{reminder.reminderDescription} (Due: {reminder.reminderDueDateEnd})" for reminder in reminders])
+    subject = "Your Reminders"
+
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)  # Adjust for per-user credentials
+    service = build('gmail', 'v1', credentials=creds)
+
+    message = create_message(user_email, user_email, subject, email_body)
+    send_email(service, 'me', message)
+
+    return HttpResponseRedirect('/reminders/')
