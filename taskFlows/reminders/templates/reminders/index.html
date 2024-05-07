@@ -39,7 +39,7 @@
                     {% else %}
                     <form action="{% url 'reminders:send_reminder_email' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit">Send Reminders</button>
+                        <button type="submit">Send Reminder</button>
                     </form>
                     {% endif %}
                 </div>

@@ -254,39 +254,47 @@ header h1 a:hover {
 
 
 .auth-form {
-  max-width: 360px;
+  max-width: 800px;  /* or any appropriate width */
   margin: 40px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns content to the left */
 }
 
 .auth-form h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .auth-form form {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
 }
 
+.auth-form label, .auth-form input, .auth-form button {
+    width: 100%;  /* Ensures full width within the form */
+    display: block;  /* Makes each form element take a new line */
+}
 .auth-form input[type="text"],
 .auth-form input[type="password"],
 .auth-form input[type="email"] {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 15px;  /* Increased padding for better readability */
+  margin-bottom: 15px;  /* More space between fields */
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;  /* Larger font size for better visibility */
 }
 
 .auth-form button.btn {
-  padding: 10px;
+  padding: 12px 20px;  /* More padding for a better button click area */
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
+  font-size: 16px;  /* Larger text in button */
   cursor: pointer;
 }
 
@@ -294,9 +302,10 @@ header h1 a:hover {
   background-color: #0056b3;
 }
 
+
 .auth-form p {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .auth-form a {
@@ -306,6 +315,22 @@ header h1 a:hover {
 
 .auth-form a:hover {
   text-decoration: underline;
+}
+
+.auth-form .help-text {
+  font-size: 14px;  /* Smaller font size for help text */
+  color: #666;  /* Lighter color for less emphasis */
+  margin-bottom: 5px;  /* Tighter spacing with the input field */
+}
+
+.auth-form .error-message {
+  color: #d9534f;  /* Error color */
+  font-size: 14px;
+}
+
+.auth-form label {
+  margin-bottom: 5px;  /* Space between label and input */
+  font-weight: bold; /* Optional: Makes labels stand out */
 }
 
 /* Style for sorting form and dropdown */
