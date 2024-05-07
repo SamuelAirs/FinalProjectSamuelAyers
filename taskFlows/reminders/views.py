@@ -99,17 +99,22 @@ def deleteReminder(request, reminder_id):
 def send_reminder_email(request):
     user_email = request.user.email
     if not user_email:
-        return HttpResponseRedirect('/update_email/')  # Handle the case where user email is not available
+        return HttpResponseRedirect('/update_email/')  # Handle if no email is provided
 
     reminders = reminderBase.objects.filter(user=request.user, reminderCompletion=False)
-    email_body = "\n".join(
-        [f"{reminder.reminderDescription} (Due: {reminder.reminderDueDateEnd})" for reminder in reminders])
-    subject = "Your Reminders"
+    email_body = "Here is your requested reminder:\n\n"
+    for reminder in reminders:
+        email_body += f"Title: {reminder.reminderDescription}\n"
+        email_body += f"Details: {reminder.reminderDetails}\n"
+        email_body += f"Start: {reminder.reminderDueDateStart} - End: {reminder.reminderDueDateEnd}\n"
+        email_body += f"Importance: {reminder.reminderImportance}\n\n"
 
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)  # Adjust for per-user credentials
+    subject = "Your TaskFlows Reminders"
+
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     service = build('gmail', 'v1', credentials=creds)
-
     message = create_message(user_email, user_email, subject, email_body)
     send_email(service, 'me', message)
 
-    return HttpResponseRedirect('/reminders/')
+    return HttpResponseRedirect('/reminders/?email_sent=true')
+
