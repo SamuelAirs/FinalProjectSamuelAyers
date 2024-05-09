@@ -1,5 +1,4 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse
@@ -96,11 +95,8 @@ def deleteReminder(request, reminder_id):
 
 
 @login_required
-def send_reminder_email(request):
+def sendReminderEmail(request):
     user_email = request.user.email
-    if not user_email:
-        return HttpResponseRedirect('/update_email/')  # Handle if no email is provided
-
     reminders = reminderBase.objects.filter(user=request.user, reminderCompletion=False)
     email_body = "Here is your requested reminder:\n\n"
     for reminder in reminders:

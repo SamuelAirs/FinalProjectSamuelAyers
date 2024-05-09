@@ -1,12 +1,12 @@
 from django.urls import path
 
 from . import views
-from .views import send_reminder_email
+from .views import sendReminderEmail
 
 app_name = 'reminders'
 urlpatterns = [
     path("", views.index.as_view(), name="index"),
-    path('send_email/', send_reminder_email, name='send_reminder_email'),
+    path('send_email/', sendReminderEmail, name='sendReminderEmail'),
     path("<int:reminders_id>/", views.detail, name='detail'),
     path('new/', views.createReminder, name='createReminder'),
     path('toggle/<int:reminder_id>/', views.toggleCompletion, name='toggleCompletion'),
