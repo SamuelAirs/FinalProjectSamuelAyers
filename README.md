@@ -39,7 +39,9 @@ but I initially conceptualized the idea in and entrepreneurship class, and I wor
 ### How to run
 `python quickstart.py`
 * This will open up a window that will allow you to grant permission for the application to send reminders via your gmail.
-  
+
+`cd taskflows`
+
 `python manage.py migrate`
 
 `python manage.py runserver`
